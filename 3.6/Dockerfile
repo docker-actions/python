@@ -29,6 +29,9 @@ RUN if [ "x$(ls ${BUILD_DEBS}/)" = "x" ]; then \
       done; \
     fi
 
+# /usr/bin/python3 => /usr/bin/python${VERSION} symlink
+RUN ln -s python${VERSION} ${ROOTFS}/usr/bin/python3
+
 COPY entrypoint.sh ${ROOTFS}/usr/local/bin/entrypoint.sh
 RUN chmod +x ${ROOTFS}/usr/local/bin/entrypoint.sh
 
