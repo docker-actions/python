@@ -1,7 +1,8 @@
 FROM ubuntu:bionic as build
 
-ARG VERSION=3.6
-ARG REQUIRED_PACKAGES="python${VERSION}-minimal libpython${VERSION}-minimal libpython${VERSION}-stdlib"
+ARG MAJOR_VERSION=3
+ARG MINOR_VERSION=6
+ARG REQUIRED_PACKAGES="python${MAJOR_VERSION}.${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}.${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}.${MINOR_VERSION}-stdlib"
 
 ENV ROOTFS /build/rootfs
 ENV BUILD_DEBS /build/debs
@@ -29,13 +30,13 @@ RUN if [ "x$(ls ${BUILD_DEBS}/)" = "x" ]; then \
       done; \
     fi
 
-# /usr/bin/python3 => /usr/bin/python${VERSION} symlink
-RUN ln -s python${VERSION} ${ROOTFS}/usr/bin/python3
+# /usr/bin/python${MAJOR_VERSION} => /usr/bin/python${MAJOR_VERSION}.${MINOR_VERSION} symlink
+RUN ln -s python${MAJOR_VERSION}.${MINOR_VERSION} ${ROOTFS}/usr/bin/python${MAJOR_VERSION}
 
 COPY entrypoint.sh ${ROOTFS}/usr/local/bin/entrypoint.sh
 RUN chmod +x ${ROOTFS}/usr/local/bin/entrypoint.sh
 
-FROM actions/bash:4.4.18-1
+FROM actions/bash:4.4.18-5
 LABEL maintainer = "ilja+docker@bobkevic.com"
 
 ARG ROOTFS=/build/rootfs
