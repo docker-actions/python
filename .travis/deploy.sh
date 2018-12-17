@@ -5,11 +5,12 @@ set -Eeuo pipefail
 docker_org="${1}"
 tag="${2}"
 
-image_name=''
+image_tag=''
 if [ "x${tag}" = "xlatest" ]; then
-  image_name="${docker_org}/python:${MAJOR_VERSION}.${MINOR_VERSION}-${tag}"
+  image_tag="${MAJOR_VERSION}.${MINOR_VERSION}-${tag}"
 else
-  image_name="${docker_org}/python:${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${tag}"
+  image_tag="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${tag}"
 fi
 
-docker push ${image_name}
+docker push ${docker_org}/python:${image_tag}
+docker push ${docker_org}/python${MAJOR_VERSION}:${image_tag}
