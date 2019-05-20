@@ -7,7 +7,7 @@ tag="${2}"
 
 build_args=''
 for ba in $BUILD_ARGS; do
-  build_args="${build_args} --build-arg ${ba}=${!ba}"
+  build_args="${build_args} --build-arg ${ba}"
 done
 
 echo -e "#!/usr/bin/env bash\nset -Eeuo pipefail\nexec python${MAJOR_VERSION}.${MINOR_VERSION} \"\$@\"" > entrypoint.sh
