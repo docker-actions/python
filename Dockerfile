@@ -1,9 +1,9 @@
 ARG ROOTFS=/build/rootfs
 
-FROM ubuntu:bionic as build
+FROM ubuntu:jammy as build
 
 ARG MAJOR_VERSION=3
-ARG MINOR_VERSION=6
+ARG MINOR_VERSION=10
 ARG REQUIRED_PACKAGES="python${MAJOR_VERSION}.${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}.${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}.${MINOR_VERSION}-stdlib"
 ARG ROOTFS
 
@@ -53,7 +53,7 @@ RUN ln -s python${MAJOR_VERSION}.${MINOR_VERSION} ${ROOTFS}/usr/bin/python${MAJO
 COPY entrypoint.sh ${ROOTFS}/usr/local/bin/entrypoint.sh
 RUN chmod +x ${ROOTFS}/usr/local/bin/entrypoint.sh
 
-FROM actions/bash:4.4.18-8
+FROM actions/bash:5.1.16-jammy1
 LABEL maintainer = "ilja+docker@bobkevic.com"
 
 ARG ROOTFS
