@@ -9,8 +9,8 @@ push="${4:-false}"
 
 BUILD_ARGS="MAJOR_VERSION MINOR_VERSION PATCH_VERSION REQUIRED_PACKAGES"
 MAJOR_VERSION=${version%?????}
-MINOR_VERSION=$(echo $version |cut -d '.' -f 2)
-PATCH_VERSION=${version#????}
+MINOR_VERSION=$(echo $VERSION |cut -d '.' -f 2)
+PATCH_VERSION=$(echo $VERSION |cut -d '.' -f 3)
 REQUIRED_PACKAGES="python${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}.${MINOR_VERSION}-minimal libpython${MAJOR_VERSION}-stdlib"
 if [ "${MAJOR_VERSION}" == "3" ]; then
   REQUIRED_PACKAGES="${REQUIRED_PACKAGES} python${MAJOR_VERSION}-lib2to3"

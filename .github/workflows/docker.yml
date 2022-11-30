@@ -70,4 +70,11 @@ jobs:
       run: |
         MAJOR_VERSION=${VERSION%?????}
         MINOR_VERSION=$(echo $VERSION |cut -d '.' -f 2)
-        docker buildx imagetools inspect ${DOCKER_ORG}/${IMAGE_NAME}:${MAJOR_VERSION}.${MINOR_VERSION}-${{ steps.get_version.outputs.TAG }}
+        PATCH_VERSION=$(echo $VERSION |cut -d '.' -f 3)
+        image_tag=""
+        if [ "x${{ steps.get_version.outputs.TAG }}" = "xlatest" ]; then
+          image_tag="${MAJOR_VERSION}.${MINOR_VERSION}-${{ steps.get_version.outputs.TAG }}"
+        else
+          image_tag="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${{ steps.get_version.outputs.TAG }}"
+        fi
+        docker buildx imagetools inspect ${DOCKER_ORG}/${IMAGE_NAME}:${image_tag}
